@@ -9,7 +9,6 @@ app.get("/api/v1", (req: Request, res: Response) => {
   res.status(200).send("<h1>Welcome!</h1>");
 });
 
-
 app.listen(PORT, () => {
-    console.log(Server is listening on port: ${PORT});
-  });
+  console.log(`Server is listening on port: ${PORT}`);
+});
