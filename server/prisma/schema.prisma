@@ -55,3 +55,15 @@ model Feedback {
   ratings     String
   suggestions String
 }
+
+model Badges {
+  id          Int    @id @default(autoincrement())
+  badgeName   String
+  description String
+}
+
+model Leaderboards {
+  id           Int    @id @default(autoincrement())
+  rank         String
+  attendeeName String
+}
