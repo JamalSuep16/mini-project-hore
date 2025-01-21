@@ -36,16 +36,16 @@ model Categories {
 }
 
 model Attendees {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String
   password String
 }
 
 model Organizers {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String
   password String
 }
 
@@ -57,9 +57,11 @@ model Feedback {
 }
 
 model Badges {
-  id          Int    @id @default(autoincrement())
-  badgeName   String
-  description String
+  id                Int    @id @default(autoincrement())
+  badgeName         String
+  description       String
+  iconUrl           String
+  milestoneCriteria String
 }
 
 model Leaderboards {
