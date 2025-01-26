@@ -19,6 +19,13 @@ enum Role {
   ADMIN
 }
 
+enum categories {
+  Food
+  Bussiness
+  Arts
+  Hobbies
+}
+
 model User {
   id             Int      @id @default(autoincrement())
   name           String
@@ -42,4 +49,39 @@ model ConfirmToken {
   userId      Int
 
   User User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+model Events {
+  id         Int        @id @default(autoincrement())
+  title      String
+  desc       String
+  categories categories
+  upcoming   Boolean
+}
+
+model Categories {
+  id       Int        @id @default(autoincrement())
+  name     categories
+  preview  String
+  imageURL String
+}
+
+model Feedback {
+  id          Int    @id @default(autoincrement())
+  comments    String
+  ratings     String
+  suggestions String
+}
+
+model Badges {
+  id                Int    @id @default(autoincrement())
+  badgeName         String
+  description       String
+  iconUrl           String
+  milestoneCriteria String
+}
+
+model Leaderboards {
+  id           Int    @id @default(autoincrement())
+  rank         String
+  attendeeName String
 }
