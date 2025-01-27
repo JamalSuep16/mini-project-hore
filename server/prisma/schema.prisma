@@ -13,12 +13,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ORGANIZER
+  ADMIN
+}
+
 enum categories {
   Food
   Bussiness
   Arts
   Hobbies
 }
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  username       String   @unique
+  password       String
+  email          String   @unique
+  emailConfirmed Boolean  @default(false)
+  role           Role     @default(USER)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  ConfirmToken ConfirmToken[]
+}
+
+model ConfirmToken {
+  id          Int      @id @default(autoincrement())
+  token       String
+  expiredDate DateTime
+  used        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  userId      Int
+
+  User User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 model Events {
   id         Int        @id @default(autoincrement())
@@ -33,20 +63,6 @@ model Categories {
   name     categories
   preview  String
   imageURL String
-}
-
-model Attendees {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String
-  password String
-}
-
-model Organizers {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String
-  password String
 }
 
 model Feedback {
