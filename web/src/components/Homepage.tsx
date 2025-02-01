@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Homepage() {
   return (
     <>
-      <section className="fixed px-40 p-10 flex gap-20 bg-blue-400">
+      <section className=" px-40 p-10 flex gap-20 bg-blue-400">
         <div className="h-96 w-1/2 flex flex-col justify-center gap-3">
           <h1 className="text-5xl">Hore!</h1>
           <h2 className="text-3xl">by The Three Musketeers</h2>
