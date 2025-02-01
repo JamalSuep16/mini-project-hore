@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import postRouter from "./routers/post-router";
-import categoryRouter from "./routers/category-router";
+// import postRouter from "./routers/post-router";
+// import categoryRouter from "./routers/category-router";
 import authRouter from "./routers/auth-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
@@ -22,12 +22,13 @@ app.use(
   })
 );
 
-app.use("/api/v1/post", postRouter);
-app.use("/api/v1/categories", categoryRouter);
+// app.use("/api/v1/post", postRouter);
+// app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port: ${PORT}`)
+  console.log(`Server is listening on port: ${PORT}`);
+});
