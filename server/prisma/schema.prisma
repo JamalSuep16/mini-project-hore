@@ -19,6 +19,13 @@ enum Role {
   ADMIN
 }
 
+enum Categories {
+  Food
+  Bussiness
+  Arts
+  Hobbies
+}
+
 model User {
   id             Int      @id @default(autoincrement())
   name           String
@@ -51,6 +58,7 @@ model Event {
   description String
   date        DateTime
   price       Float
+  
   tickets     Ticket[]
 }
 
@@ -60,4 +68,39 @@ model Ticket {
   userId  Int?
   Event   Event?  @relation(fields: [eventId], references: [id])
   eventId String?
+
+model Events {
+  id         Int        @id @default(autoincrement())
+  title      String
+  desc       String
+  categories categories
+  upcoming   Boolean
+}
+
+model Categories {
+  id       Int        @id @default(autoincrement())
+  name     Categories
+  preview  String
+  imageURL String
+}
+
+model Feedback {
+  id          Int    @id @default(autoincrement())
+  comments    String
+  ratings     String
+  suggestions String
+}
+
+model Badges {
+  id                Int    @id @default(autoincrement())
+  badgeName         String
+  description       String
+  iconUrl           String
+  milestoneCriteria String
+}
+
+model Leaderboards {
+  id           Int    @id @default(autoincrement())
+  rank         String
+  attendeeName String
 }

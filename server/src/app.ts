@@ -29,6 +29,16 @@ app.use("/api/v1/auth", authRouter);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
+app.get("/api/v1/posts", async (req: Request, res: Response) => {
+  try {
+    const events = await prisma.events.findMany(); 
+    res.status(200).json({ ok: true, data: events });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ ok: false, error: "Internal server error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);
 });
