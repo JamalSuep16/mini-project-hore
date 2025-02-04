@@ -3,97 +3,142 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  //   await prisma.events.deleteMany();
-  //   await prisma.category.deleteMany(); (dijadiin atendees aj kali)
-  //   await prisma.categoryPost.deleteMany(); (dijadiin organizers aj kali)
+  await prisma.events.deleteMany();
+  await prisma.categories.deleteMany();
+  await prisma.feedback.deleteMany();
 
   /* -------------------------------------------------------------------------- */
   /*                                   EVENTS                                   */
   /* -------------------------------------------------------------------------- */
   async function events() {
-    const event1 = await prisma.events.create({
-      data: {
-        title: "Journey to the Unknown",
-        desc: "Exploring the mysteries of the universe.",
-        categories: "Hobbies",
-        upcoming: true,
-      },
-    });
-
-    const event2 = await prisma.events.create({
-      data: {
-        title: "The Art of Mindfulness",
-        desc: "A guide to living in the present moment.",
-        categories: "Arts",
-        upcoming: false,
-      },
-    });
-
-    const event3 = await prisma.events.create({
-      data: {
-        title: "Tech Innovations 2023",
-        desc: "Discover the latest advancements in technology.",
-        categories: "Bussiness",
-        upcoming: true,
-      },
-    });
-
-    const event4 = await prisma.events.create({
-      data: {
-        title: "Culinary Delights",
-        desc: "A journey through the world of gourmet cuisine.",
-        categories: "Food",
-        upcoming: false,
-      },
-    });
-
-    const event5 = await prisma.events.create({
-      data: {
-        title: "Global Eco-Friendly Company Forum",
-        desc: "to make the world a better place.",
-        categories: "Bussiness",
-        upcoming: false,
-      },
+    await prisma.events.createMany({
+      data: [
+        {
+          title: "Journey to the Unknown",
+          desc: "Exploring the mysteries of the universe.",
+          categories: "Hobbies",
+          upcoming: true,
+        },
+        {
+          title: "The Art of Mindfulness",
+          desc: "A guide to living in the present moment.",
+          categories: "Arts",
+          upcoming: false,
+        },
+        {
+          title: "Tech Innovations 2023",
+          desc: "Discover the latest advancements in technology.",
+          categories: "Bussiness",
+          upcoming: true,
+        },
+        {
+          title: "Culinary Delights",
+          desc: "A journey through the world of gourmet cuisine.",
+          categories: "Food",
+          upcoming: false,
+        },
+        {
+          title: "Global Eco-Friendly Company Forum",
+          desc: "to make the world a better place.",
+          categories: "Bussiness",
+          upcoming: false,
+        },
+      ],
     });
   }
 
   /* -------------------------------------------------------------------------- */
   /*                                 GATEGORIES                                 */
   /* -------------------------------------------------------------------------- */
-//   async function categories() {
-//     const category1 = await prisma.categories.create({
-//       data: {
-//         name: "Music",
-//         preview: "Lorem ipsum",
-//         imageURL:
-//           "https://images.unsplash.com/photo-1735779411146-79e19ac891cc?q=80&w=1900&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//       },
-//     });
-//     const category2 = await prisma.categories.create({
-//       data: {
-//         name: "Memory Lane",
-//         preview: "Lorem ipsum",
-//         imageURL:
-//           "https://images.unsplash.com/photo-1721332149112-c54e68990d99?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//       },
-//     });
-//     const category3 = await prisma.categories.create({
-//       data: {
-//         name: "Soul Scribbles",
-//         preview: "Lorem ipsum",
-//         imageURL:
-//           "https://plus.unsplash.com/premium_photo-1736668905572-66a589ea2847?q=80&w=1984&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//       },
-//     });
-//     const category4 = await prisma.categories.create({
-//       data: {
-//         name: "The Daily Grind",
-//         preview: "Lorem ipsum",
-//         imageURL:
-//           "https://images.unsplash.com/photo-1736613403120-8d48aebd29e1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//       },
-//     });
-//   }
+  async function categories() {
+    const Food = await prisma.categories.create({
+      data: {
+        name: "Food",
+        preview: "Lorem ipsum",
+        imageURL:
+          "https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+    });
+    const Bussiness = await prisma.categories.create({
+      data: {
+        name: "Bussiness",
+        preview: "Lorem ipsum",
+        imageURL:
+          "https://plus.unsplash.com/premium_photo-1661772661721-b16346fe5b0f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+    });
+    const Arts = await prisma.categories.create({
+      data: {
+        name: "Arts",
+        preview: "Lorem ipsum",
+        imageURL:
+          "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+    });
+    const Hobbies = await prisma.categories.create({
+      data: {
+        name: "Hobbies",
+        preview: "Lorem ipsum",
+        imageURL:
+          "https://images.unsplash.com/photo-1736613403120-8d48aebd29e1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+    });
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  FEEDBACK                                  */
+  /* -------------------------------------------------------------------------- */
+
+  async function feedback() {
+    const coolFeedback = await prisma.feedback.create({
+      data: {
+        comments: "WAAAWW, gila keren banget coi",
+        ratings: "lima",
+        suggestions: "gak ada sih cuma semoga lebih gacor lagi ygy",
+      },
+    });
+
+    const amazingFeedback = await prisma.feedback.create({
+      data: {
+        comments: "Wow, this is absolutely amazing!",
+        ratings: "five",
+        suggestions: "Nothing much, just keep up the great work!",
+      },
+    });
+
+    const impressiveFeedback = await prisma.feedback.create({
+      data: {
+        comments: "Really impressive! I love the effort put into this.",
+        ratings: "four",
+        suggestions: "Maybe some minor improvements in responsiveness.",
+      },
+    });
+
+    const disappointingFeedback = await prisma.feedback.create({
+      data: {
+        comments: "This was honestly disappointing. I expected more.",
+        ratings: "two",
+        suggestions: "The UI feels outdated, and the performance is sluggish.",
+      },
+    });
+
+    const terribleFeedback = await prisma.feedback.create({
+      data: {
+        comments: "Terrible experience. So many bugs and crashes frequently.",
+        ratings: "one",
+        suggestions:
+          "Please fix the stability issues before adding new features.",
+      },
+    });
+
+    const decentFeedback = await prisma.feedback.create({
+      data: {
+        comments: "Not bad at all! I enjoyed using this.",
+        ratings: "four",
+        suggestions: "Maybe add a dark mode option for better usability.",
+      },
+    });
+  }
 
   return events();
 }

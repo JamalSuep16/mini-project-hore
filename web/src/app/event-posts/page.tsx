@@ -10,10 +10,10 @@ export default function EventPostsPage() {
           </div>
           <div className="flex flex-col w-full gap-2">
             <h1 className="font-bold text-xl bg-lightSena p-2 rounded-sm">Events title</h1>
-            <h2>this date is a new date</h2>
-            <h2>in Jakarta</h2>
-            <h2>Rp.3.000.000</h2>
-            <h2>by a Muskateer</h2>
+            <p>this date is a new date</p>
+            <p>in Jakarta</p>
+            <p>Rp.3.000.000</p>
+            <p>by a Muskateer</p>
           </div>
         </div>
       </section>
