@@ -13,7 +13,7 @@ export default function EventPostsPage() {
             <p>this date is a new date</p>
             <p>in Jakarta</p>
             <p>Rp.3.000.000</p>
-            <p>by a Muskateer</p>
+            <p>by a Muskateer!</p>
           </div>
         </div>
       </section>
