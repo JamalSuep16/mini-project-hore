@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function Navbar() {
   return (
     <>
-      <nav className="flex justify-between items-center p-5 bg-blue-800 px-40 max-xl:px-10">
-        <h1>Logo</h1>
-        <ul className="flex gap-5 items-center">
+      <nav className="flex items-center justify-between bg-blue-800 p-5 px-40 max-xl:px-10">
+        <Link href={"/"}>Logo</Link>
+        <ul className="flex items-center gap-5">
           <li>
             <Link href={"/event-posts"}>Events</Link>
           </li>
@@ -18,7 +18,7 @@ export default function Navbar() {
           <li>
             <Link href={"/leaderboards"}>Leaderboards</Link>
           </li>
-          <li className="border border-white rounded-full px-3 mx-3">
+          <li className="mx-3 rounded-full border border-white px-3">
             <Link href={"/"}>Log In</Link>
           </li>
         </ul>

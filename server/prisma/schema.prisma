@@ -23,22 +23,23 @@ enum Categories {
   Food
   Bussiness
   Arts
-  Hobbies
+  Music
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   name           String
-  username       String   @unique
+  username       String    @unique
   password       String
-  email          String   @unique
-  emailConfirmed Boolean  @default(false)
-  role           Role     @default(USER)
-  tickets        Ticket[]
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  email          String    @unique
+  emailConfirmed Boolean   @default(false)
+  role           Role      @default(USER)
+  feedback       Feedback? @relation(fields: [feedbackId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   ConfirmToken ConfirmToken[]
+  feedbackId   Int?
 }
 
 model ConfirmToken {
@@ -74,7 +75,7 @@ model Events {
   title      String
   desc       String
   categories categories
-  upcoming   Boolean
+  upcoming   Boolean    @default(false)
 }
 
 model Categories {
@@ -86,9 +87,11 @@ model Categories {
 
 model Feedback {
   id          Int    @id @default(autoincrement())
+  userId      Int    @unique
   comments    String
-  ratings     String
+  ratings     Int
   suggestions String
+  User        User[]
 }
 
 model Badges {
