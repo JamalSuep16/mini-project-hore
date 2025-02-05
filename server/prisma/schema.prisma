@@ -19,29 +19,31 @@ enum Role {
   ADMIN
 }
 
-enum categories {
+enum Categories {
   Food
   Bussiness
   Arts
-  Hobbies
+  Music
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   name           String
-  username       String   @unique
+  username       String    @unique
   password       String
-  email          String   @unique
-  emailConfirmed Boolean  @default(false)
-  role           Role     @default(USER)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  email          String    @unique
+  emailConfirmed Boolean   @default(false)
+  role           Role      @default(USER)
+  feedback       Feedback? @relation(fields: [feedbackId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   ConfirmToken ConfirmToken[]
   Order        Order[]
   badges       Badge[]
   events       Event[]
   feedback     Feedback[]
+  feedbackId   Int?
 }
 
 model ConfirmToken {
@@ -64,33 +66,47 @@ model Order {
   Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
-model Event {
+model Ticket {
+  id      String  @id @default(uuid())
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  Int?
+  Event   Event?  @relation(fields: [eventId], references: [id])
+  eventId String?
+
+model Events {
   id         Int        @id @default(autoincrement())
   title      String
   desc       String
   categories categories
   upcoming   Boolean
+  price      Int
+  date        DateTime
 
   Order    Order[]
   Feedback Feedback[]
+  tickets     Ticket[]
   User     User?      @relation(fields: [userId], references: [id])
   userId   Int?
 }
 
 model Categories {
   id       Int        @id @default(autoincrement())
-  name     categories
+  name     Categories
   preview  String
   imageURL String
 }
 
 model Feedback {
   id          Int    @id @default(autoincrement())
+  userId      Int    @unique
   comments    String
-  ratings     String
+  ratings     Int
   suggestions String
+
   userId      Int
   eventId     Int
+  User        User[]
+}
 
   User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
