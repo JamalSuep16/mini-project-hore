@@ -2,97 +2,128 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const badgeCriteria = {
-  FIRST_EVENT_REGISTRATION: {
-    name: "First Event Registration",
-    description: "Registered for the first event.",
-    condition: (user: any) => user.orders.length >= 1,
-  },
-  FIVE_EVENTS_ATTENDED: {
-    name: "5 Events Attended",
-    description: "Attended 5 events.",
-    condition: (user: any) => user.orders.length >= 5,
-  },
-  TEN_EVENTS_ATTENDED: {
-    name: "10 Events Attended",
-    description: "Attended 10 events.",
-    condition: (user: any) => user.orders.length >= 10,
-  },
-  TWENTY_EVENTS_ATTENDED: {
-    name: "20 Events Attended",
-    description: "Attended 20 events.",
-    condition: (user: any) => user.orders.length >= 20,
-  },
-  FIRST_REVIEW: {
-    name: "First Review",
-    description: "Left a review for an event.",
-    condition: (user: any) => user.reviews.length >= 1,
-  },
-  FIRST_EVENT_CREATED: {
-    name: "First Event Created",
-    description: "Created their first event.",
-    condition: (user: any) => user.events.length >= 1,
-  },
-  HUNDRED_TICKETS_SOLD: {
-    name: "100 Tickets Sold",
-    description: "Sold 100 tickets for events.",
-    condition: (user: any) =>
-      user.events.reduce(
-        (sum: number, event: any) => sum + event.ticketsSold,
-        0
-      ) >= 100,
-  },
-  FIVE_HUNDRED_TICKETS_SOLD: {
-    name: "500 Tickets Sold",
-    description: "Sold 500 tickets for events.",
-    condition: (user: any) =>
-      user.events.reduce(
-        (sum: number, event: any) => sum + event.ticketsSold,
-        0
-      ) >= 500,
-  },
-  THOUSAND_TICKETS_SOLD: {
-    name: "1000 Tickets Sold",
-    description: "Sold 1000 tickets for events.",
-    condition: (user: any) =>
-      user.events.reduce(
-        (sum: number, event: any) => sum + event.ticketsSold,
-        0
-      ) >= 1000,
-  },
-};
+// User Badges
 
-async function awardBadges(userId: number) {
+export async function awardFirstEventBadge(userId: number) {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    include: {
-      orders: true,
-      events: true,
-      reviews: true,
-      badges: true,
-    },
+    include: { Order: true },
   });
 
-  if (!user) return;
+  if (user && user.Order.length === 1) {
+    const badge = await prisma.badge.findFirst({
+      where: { name: "First Event" },
+    });
 
-  for (const [key, criteria] of Object.entries(badgeCriteria)) {
-    const hasBadge = user.badges.some(
-      (badge: any) => badge.name === criteria.name
+    if (badge) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { badges: { connect: { id: badge.id } } },
+      });
+    }
+  }
+}
+
+export async function awardEventCountBadge(userId: number) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { Order: true },
+  });
+
+  if (user) {
+    const eventCount = user.Order.length;
+    let badgeName = "";
+
+    if (eventCount === 5) badgeName = "5 Events";
+    else if (eventCount === 10) badgeName = "10 Events";
+    else if (eventCount === 20) badgeName = "20 Events";
+
+    if (badgeName) {
+      const badge = await prisma.badge.findFirst({
+        where: { name: badgeName },
+      });
+
+      if (badge) {
+        await prisma.user.update({
+          where: { id: userId },
+          data: { badges: { connect: { id: badge.id } } },
+        });
+      }
+    }
+  }
+}
+
+export async function awardReviewBadge(userId: number) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { feedbacks: true },
+  });
+
+  if (user && user.feedbacks.length > 0) {
+    const badge = await prisma.badge.findFirst({
+      where: { name: "Event Reviewer" },
+    });
+
+    if (badge) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { badges: { connect: { id: badge.id } } },
+      });
+    }
+  }
+}
+
+// Organizer Badges
+
+export async function awardFirstEventCreatedBadge(userId: number) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { events: true },
+  });
+
+  if (user && user.events.length === 1) {
+    const badge = await prisma.badge.findFirst({
+      where: { name: "First Event Created" },
+    });
+
+    if (badge) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { badges: { connect: { id: badge.id } } },
+      });
+    }
+  }
+}
+
+export async function awardTicketSalesBadge(userId: number) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { events: { include: { Order: true } } },
+  });
+
+  if (user) {
+    const totalTicketsSold = user.events.reduce(
+      (sum, event) => sum + event.Order.length,
+      0
     );
 
-    if (!hasBadge && criteria.condition(user)) {
-      // Award the badge
-      await prisma.badge.upsert({
-        where: { name: criteria.name },
-        update: {},
-        create: {
-          name: criteria.name,
-          description: criteria.description,
-          users: {
-            connect: { id: userId },
-          },
-        },
+    let badgeName = "";
+
+    if (totalTicketsSold >= 1000) badgeName = "1000 Tickets Sold";
+    else if (totalTicketsSold >= 500) badgeName = "500 Tickets Sold";
+    else if (totalTicketsSold >= 100) badgeName = "100 Tickets Sold";
+
+    if (badgeName) {
+      const badge = await prisma.badge.findFirst({
+        where: { name: badgeName },
       });
+
+      if (badge) {
+        await prisma.user.update({
+          where: { id: userId },
+          data: { badges: { connect: { id: badge.id } } },
+        });
+      }
     }
   }
 }
