@@ -3,13 +3,262 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.events.deleteMany();
+  await prisma.event.deleteMany();
   await prisma.categories.deleteMany();
   await prisma.feedback.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.badges.deleteMany();
+  await prisma.order.deleteMany();
 
   /* -------------------------------------------------------------------------- */
   /*                                   EVENTS                                   */
   /* -------------------------------------------------------------------------- */
+  // await prisma.event.createMany({
+  //   data: [
+  //     {
+  //       title: "Journey to the Unknown",
+  //       desc: "Exploring the mysteries of the universe.",
+  //       categories: "Hobbies",
+  //       upcoming: true,
+  //     },
+  //     {
+  //       title: "The Art of Mindfulness",
+  //       desc: "A guide to living in the present moment.",
+  //       categories: "Arts",
+  //       upcoming: false,
+  //     },
+  //     {
+  //       title: "Tech Innovations 2023",
+  //       desc: "Discover the latest advancements in technology.",
+  //       categories: "Bussiness",
+  //       upcoming: true,
+  //     },
+  //     {
+  //       title: "Culinary Delights",
+  //       desc: "A journey through the world of gourmet cuisine.",
+  //       categories: "Food",
+  //       upcoming: false,
+  //     },
+  //     {
+  //       title: "Global Eco-Friendly Company Forum",
+  //       desc: "to make the world a better place.",
+  //       categories: "Bussiness",
+  //       upcoming: false,
+  //     },
+  //   ],
+  // });
+
+  const event1 = await prisma.event.create({
+    data: {
+      title: "Journey to the Unknown",
+      desc: "Exploring the mysteries of the universe.",
+      categories: Hobbies.name,
+      upcoming: true,
+    },
+  });
+
+  const event2 = await prisma.event.create({
+    data: {
+      title: "The Art of Mindfulness",
+      desc: "A guide to living in the present moment.",
+      categories: "Arts",
+      upcoming: false,
+    },
+  });
+
+  const event3 = await prisma.event.create({
+    data: {
+      title: "Tech Innovations 2023",
+      desc: "Discover the latest advancements in technology.",
+      categories: "Bussiness",
+      upcoming: true,
+    },
+  });
+
+  const event4 = await prisma.event.create({
+    data: {
+      title: "Culinary Delights",
+      desc: "A journey through the world of gourmet cuisine.",
+      categories: "Food",
+      upcoming: false,
+    },
+  });
+
+  const event5 = await prisma.event.create({
+    data: {
+      title: "Global Eco-Friendly Company Forum",
+      desc: "to make the world a better place.",
+      categories: "Bussiness",
+      upcoming: false,
+    },
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  USER                                  */
+  /* -------------------------------------------------------------------------- */
+  const user1 = await prisma.user.create({
+    data: {
+      name: "Bambank",
+      username: "bambank123",
+      password: "pass1",
+      email: "bambank@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user2 = await prisma.user.create({
+    data: {
+      name: "Alice",
+      username: "alice456",
+      password: "pass2",
+      email: "alice@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user3 = await prisma.user.create({
+    data: {
+      name: "Charlie",
+      username: "charlie789",
+      password: "pass3",
+      email: "charlie@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user4 = await prisma.user.create({
+    data: {
+      name: "David",
+      username: "david101",
+      password: "pass4",
+      email: "david@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user5 = await prisma.user.create({
+    data: {
+      name: "Emma",
+      username: "emma202",
+      password: "pass5",
+      email: "emma@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user6 = await prisma.user.create({
+    data: {
+      name: "Frank",
+      username: "frank303",
+      password: "pass6",
+      email: "frank@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user7 = await prisma.user.create({
+    data: {
+      name: "Grace",
+      username: "grace404",
+      password: "pass7",
+      email: "grace@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user8 = await prisma.user.create({
+    data: {
+      name: "Henry",
+      username: "henry505",
+      password: "pass8",
+      email: "henry@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user9 = await prisma.user.create({
+    data: {
+      name: "Isla",
+      username: "isla606",
+      password: "pass9",
+      email: "isla@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  const user10 = await prisma.user.create({
+    data: {
+      name: "Jack",
+      username: "jack707",
+      password: "pass10",
+      email: "jack@gmail.com",
+      emailConfirmed: true,
+      role: "USER",
+    },
+  });
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  ORDER                                  */
+  /* -------------------------------------------------------------------------- */
+
+  const order1 = await prisma.order.create({
+    data: {
+      userId: user1.id,
+      eventId: event1.id,
+    },
+  });
+
+  const order2 = await prisma.order.create({
+    data: {
+      userId: user1.id,
+      eventId: event2.id,
+    },
+  });
+
+  const order3 = await prisma.order.create({
+    data: {
+      userId: user1.id,
+      eventId: event3.id,
+    },
+  });
+
+  const order4 = await prisma.order.create({
+    data: {
+      userId: user1.id,
+      eventId: event4.id,
+    },
+  });
+
+  const order5 = await prisma.order.create({
+    data: {
+      userId: user1.id,
+      eventId: event5.id,
+    },
+  });
+
+  const order6 = await prisma.order.create({
+    data: {
+      userId: user2.id,
+      eventId: event1.id,
+    },
+  });
+
+  const order7 = await prisma.order.create({
+    data: {
+      userId: user3.id,
+      eventId: event1.id,
+    },
+  });
+
   async function events() {
     await prisma.events.createMany({
       data: [

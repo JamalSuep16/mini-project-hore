@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_LOCAL")
 }
 
 enum Role {
@@ -39,6 +39,10 @@ model User {
   updatedAt      DateTime  @updatedAt
 
   ConfirmToken ConfirmToken[]
+  Order        Order[]
+  badges       Badge[]
+  events       Event[]
+  feedback     Feedback[]
   feedbackId   Int?
 }
 
@@ -51,6 +55,15 @@ model ConfirmToken {
   userId      Int
 
   User User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  eventId Int
+
+  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
 model Ticket {
@@ -67,6 +80,14 @@ model Events {
   desc       String
   categories Categories
   upcoming   Boolean    @default(false)
+  price      Int
+  date        DateTime
+
+  Order    Order[]
+  Feedback Feedback[]
+  tickets     Ticket[]
+  User     User?      @relation(fields: [userId], references: [id])
+  userId   Int?
 }
 
 model Categoriess {
@@ -82,19 +103,22 @@ model Feedback {
   comments    String
   ratings     Int
   suggestions String
+
+  userId      Int
+  eventId     Int
   User        User[]
 }
 
-model Badges {
-  id                Int    @id @default(autoincrement())
-  badgeName         String
-  description       String
-  iconUrl           String
-  milestoneCriteria String
+  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
-model Leaderboards {
-  id           Int    @id @default(autoincrement())
-  rank         String
-  attendeeName String
+model Badge {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  users       User[]
 }
+
+// model Leaderboard {
+// }
