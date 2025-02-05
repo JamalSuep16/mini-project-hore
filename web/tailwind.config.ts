@@ -12,16 +12,23 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
 
-        //merah
-        primeJamal: "#a52422",
+        //pink
+        pinkPastel: "#fbb3dc",
 
-        //biru
-        lightAnas: "#6b9ac4",
-        darkAnas: "#034078",
+        //blue
+        bluePastel: "#3dbac2",
 
-        //hijau
-        lightSena: "#b9f18c",
-        darkSena: "#04724D",
+        //yellow
+        yellowPastel: "#e6c900",
+
+        //purple
+        lightPurple: "#efdbfc",
+        darkPurple: "#9e83b0",
+      },
+      fontFamily: {
+        playwrite_AU_SA: ["Playwrite AU SA", "Young_Serif"],
+        delius: ["Roboto Condensed", "Young_Serif"],
+        montserrat: ["Montserrat", "Young_Serif"],
       },
     },
   },

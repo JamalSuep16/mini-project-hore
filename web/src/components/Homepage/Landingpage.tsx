@@ -3,10 +3,10 @@ import Image from "next/image";
 export default function Landingpage() {
   return (
     <>
-      <section className="flex gap-20 bg-blue-400 p-10 px-40">
+      <section className="flex gap-20  p-10 px-40">
         <div className="flex h-96 w-1/2 flex-col justify-center gap-3">
-          <h1 className="text-5xl">Hore!</h1>
-          <h2 className="text-3xl">by The Three Musketeers</h2>
+          <h1 className="text-5xl font-playwrite_AU_SA">Hore!</h1>
+          <h2 className="text-3xl font-playwrite_AU_SA">by The Three Musketeers</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque in
             voluptatum vero inventore voluptas quod quis adipisci repellat nam!

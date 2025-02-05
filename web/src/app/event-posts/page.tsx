@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function EventPostsPage() {
   return (
     <>
       <section className="flex justify-center items-center h-screen">
-        <div className="flex flex-col items-center bg-lightAnas text-darkAnas p-5 gap-3 w-80 rounded-lg">
+        <div className="flex flex-col items-center bg-lightAnas text-darkAnas p-5 gap-3 w-80 rounded-lg shadow-2xl border-2 border-lightPurple">
           <div className="relative h-32 w-full rounded-md overflow-hidden">
             <Image src="/akane.jpg" fill alt="testing" className="object-cover"/>
           </div>
@@ -14,6 +15,7 @@ export default function EventPostsPage() {
             <p>in Jakarta</p>
             <p>Rp.3.000.000</p>
             <p>by a Muskateer!</p>
+            <Link href={"/event-posts/event-details"}>Read More</Link>
           </div>
         </div>
       </section>

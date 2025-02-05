@@ -72,13 +72,14 @@ model Ticket {
   userId  Int?
   Event   Event?  @relation(fields: [eventId], references: [id])
   eventId String?
+}
 
 model Events {
   id         Int        @id @default(autoincrement())
   title      String
   desc       String
-  categories categories
-  upcoming   Boolean
+  categories Categories
+  upcoming   Boolean    @default(false)
   price      Int
   date        DateTime
 
@@ -89,7 +90,7 @@ model Events {
   userId   Int?
 }
 
-model Categories {
+model Categoriess {
   id       Int        @id @default(autoincrement())
   name     Categories
   preview  String
