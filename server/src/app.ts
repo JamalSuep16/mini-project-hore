@@ -8,6 +8,8 @@ import authRouter from "./routers/auth-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
 
+import leaderBoardRouter from "./routes/leaderboard-routers";
+
 const app = express();
 const PORT = 8000;
 
@@ -25,13 +27,14 @@ app.use(
 // app.use("/api/v1/post", postRouter);
 // app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/leaderboard", leaderBoardRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
 app.get("/api/v1/posts", async (req: Request, res: Response) => {
   try {
-    const events = await prisma.events.findMany(); 
+    const events = await prisma.events.findMany();
     res.status(200).json({ ok: true, data: events });
   } catch (error) {
     console.error(error);
