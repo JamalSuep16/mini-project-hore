@@ -5,8 +5,10 @@ import cookieParser from "cookie-parser";
 // import postRouter from "./routers/post-router";
 // import categoryRouter from "./routers/category-router";
 import authRouter from "./routers/auth-router";
+import ticketsRouter from "./routers/tickets-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
+import referralRouter from "./routers/referral-router";
 
 const app = express();
 const PORT = 8000;
@@ -25,6 +27,8 @@ app.use(
 // app.use("/api/v1/post", postRouter);
 // app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/tickets", ticketsRouter);
+app.use("/api/v1/referral", referralRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

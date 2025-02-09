@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_LOCAL")
 }
 
 enum Role {
@@ -27,11 +27,16 @@ model User {
   email          String   @unique
   emailConfirmed Boolean  @default(false)
   role           Role     @default(USER)
-  tickets        Ticket[]
+  referralCode   String?  @unique
+  points         Int      @default(0)
+  referrerId     Int?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  ConfirmToken ConfirmToken[]
+  Referrer      User?          @relation("Referrals", fields: [referrerId], references: [id])
+  ReferredUsers User[]         @relation("Referrals")
+  Tickets       Ticket[]
+  ConfirmToken  ConfirmToken[]
 }
 
 model ConfirmToken {
