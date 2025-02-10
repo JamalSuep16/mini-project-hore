@@ -8,7 +8,7 @@
 
 // const router = express.Router();
 
-// router.route("/").get(getAllPosts).post(upload.single("image"), createPost);
+// router.route("/").get(getAllPosts).post(roleGuard("ORG"), upload.single("image"), createPost);
 // router.route("/:id").get(getSinglePost);
 
 // export default router;

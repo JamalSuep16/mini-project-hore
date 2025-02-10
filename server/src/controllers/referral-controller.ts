@@ -42,7 +42,7 @@ export async function registerUser(
       if (referrer) {
         await prisma.user.update({
           where: { id: referrer.id },
-          data: { points: { increment: 10 } }, // Add points to referrer
+          data: { points: { increment: 10000 } }, // Add points to referrer
         });
       }
     }

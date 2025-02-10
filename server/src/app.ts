@@ -9,6 +9,7 @@ import ticketsRouter from "./routers/tickets-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
 import referralRouter from "./routers/referral-router";
+import statsRouter from "./routers/stats-router";
 
 const app = express();
 const PORT = 8000;
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 
@@ -29,6 +31,7 @@ app.use(
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/tickets", ticketsRouter);
 app.use("/api/v1/referral", referralRouter);
+app.use("api/v1/stats", statsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

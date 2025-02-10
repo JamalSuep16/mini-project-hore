@@ -175,7 +175,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     res
       .cookie("token", token, {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         secure: false,
       })
       .status(200)
