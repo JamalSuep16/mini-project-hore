@@ -127,3 +127,45 @@ export async function awardTicketSalesBadge(userId: number) {
     }
   }
 }
+
+// // FRONT END
+
+// <div class="profile">
+//   <h2>Badges</h2>
+//   <div id="badges-container">
+//     <!-- Badges will be dynamically inserted here -->
+//   </div>
+// </div>
+
+// <script>
+//   const userId = 1; // Replace with the actual user ID
+//   fetch(`/api/users/${userId}/badges`)
+//     .then((response) => response.json())
+//     .then((badges) => {
+//       const badgesContainer = document.getElementById('badges-container');
+//       badges.forEach((badge) => {
+//         const badgeElement = document.createElement('div');
+//         badgeElement.className = 'badge';
+//         badgeElement.innerHTML = `
+//           <h3>${badge.name}</h3>
+//           <p>${badge.description}</p>
+//         `;
+//         badgesContainer.appendChild(badgeElement);
+//       });
+//     });
+// </script>
+
+// // TRIGGER
+
+// // After event registration
+// await awardFirstEventBadge(userId);
+// await awardEventCountBadge(userId);
+
+// // After leaving a review
+// await awardReviewBadge(userId);
+
+// // After creating an event
+// await awardFirstEventCreatedBadge(userId);
+
+// // After ticket sales
+// await awardTicketSalesBadge(userId);
