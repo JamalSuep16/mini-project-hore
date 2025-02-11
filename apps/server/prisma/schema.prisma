@@ -42,6 +42,32 @@ model User {
   Transaction   Transaction[]
   // ReferredUser  ReferredUser[]
   Event         Event[]
+enum Categories {
+  Food
+  Bussiness
+  Arts
+  Music
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  username       String   @unique
+  password       String
+  email          String   @unique
+  emailConfirmed Boolean  @default(false)
+  role           Role     @default(USER)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  ConfirmToken ConfirmToken[]
+  Order        Order[]
+  badges       Badge[]
+  events       Event[]
+  feedbacks    Feedback[]
+  feedbackId   Int?
+  Ticket       Ticket[]
+  wallet       Wallet?
 }
 
 model ConfirmToken {
@@ -122,3 +148,88 @@ enum TransactionStatus {
   SUCCESS
   FAILED
 }
+model Order {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  eventId Int
+
+  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Ticket {
+  id      String @id @default(uuid())
+  User    User?  @relation(fields: [userId], references: [id])
+  userId  Int?
+  Event   Event? @relation(fields: [eventId], references: [id])
+  eventId Int?
+}
+
+model Event {
+  id         Int        @id @default(autoincrement())
+  title      String
+  desc       String
+  slug      String
+  location String
+  categories Categories
+  image      String
+  upcoming   Boolean    @default(false)
+  price      Int        
+  date       DateTime
+
+  Order    Order[]
+  Feedback Feedback[]
+  tickets  Ticket[]
+  User     User?      @relation(fields: [userId], references: [id])
+  userId   Int?
+}
+
+model Categoriess {
+  id       Int        @id @default(autoincrement())
+  name     Categories
+  preview  String
+  imageURL String
+}
+
+model Feedback {
+  id Int @id @default(autoincrement())
+
+  comments    String
+  ratings     Int
+  suggestions String
+
+  userId  Int
+  eventId Int
+
+  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Badge {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+
+  users       User[]
+}
+
+model Wallet {
+  id      Int  @id @default(autoincrement())
+  balance Int  @default(0)
+  userId  Int  @unique
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  walletId  Int
+  amount    Float
+  createdAt DateTime @default(now())
+
+  wallet Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+}
+
+// model Leaderboard {
+// }

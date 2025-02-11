@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+AU+SA:wght@100..400&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +13,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #424242;
   }
 }
 
@@ -18,4 +22,28 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl text-darkPurple;
+  }
+
+  h2 {
+    @apply text-2xl text-pinkPastel;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  p {
+    @apply font-montserrat 
+  }
+}
+
+@layer components{
+  .navbar {
+    @apply font-delius text-xl hover:underline text-darkPurple
+  }
 }

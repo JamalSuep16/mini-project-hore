@@ -1,5 +1,9 @@
 {
   "name": "mini-project",
+  "devDependencies": {
+    "@types/node-cron": "^3.0.11",
+    "turbo": "^2.4.0"
+  },
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

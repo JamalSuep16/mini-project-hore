@@ -11,6 +11,24 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+
+        //pink
+        pinkPastel: "#fbb3dc",
+
+        //blue
+        bluePastel: "#3dbac2",
+
+        //yellow
+        yellowPastel: "#e6c900",
+
+        //purple
+        lightPurple: "#efdbfc",
+        darkPurple: "#9e83b0",
+      },
+      fontFamily: {
+        playwrite_AU_SA: ["Playwrite AU SA", "Young_Serif"],
+        delius: ["Roboto Condensed", "Young_Serif"],
+        montserrat: ["Montserrat", "Young_Serif"],
       },
     },
   },

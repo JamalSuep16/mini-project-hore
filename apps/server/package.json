@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@prisma/client": "^6.2.1",
+    "@prisma/client": "^6.3.0",
     "@types/handlebars": "^4.0.40",
     "@types/multer": "^1.4.12",
     "bcryptjs": "^2.4.3",
@@ -21,6 +21,9 @@
     "dev": "npx tsx --watch src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -34,7 +37,15 @@
     "@types/node": "^22.10.7",
     "@types/uuid": "^10.0.0",
     "resend": "^4.1.1",
+ 
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "prisma": "^6.3.0",
+
+    "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typerscript": "^0.2.3"
+    "typerscript": "^0.2.3",
+    "typescript": "^5.7.3"
   }
 }
