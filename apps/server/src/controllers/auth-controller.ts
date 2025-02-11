@@ -4,6 +4,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Resend } from "resend";
 import crypto from "node:crypto";
+import { v4 as uuidv4 } from "uuid";
 import fs from "node:fs/promises";
 import handlebars from "handlebars";
 
@@ -22,7 +23,7 @@ export async function register(
       req.body
     );
 
-    if (!name || !username || !email || !password) {
+    if (!name || !username || !email || !password || !role) {
       res.status(400).json({ message: "Missing required fields" });
       return;
     }
@@ -46,6 +47,7 @@ export async function register(
         email,
         password: hashedPassword,
         role: role as Role,
+        referralCode: uuidv4().slice(0, 8),
       },
     });
 
@@ -60,25 +62,25 @@ export async function register(
       },
     });
 
-    const templateSource = await fs.readFile(
-      "src/templates/email-confirmation-template.hbs"
-    );
-    const compiledTemplate = handlebars.compile(templateSource.toString());
-    const htmlTemplate = compiledTemplate({
-      name: name,
-      link: confirmationLink,
-    });
-    const { data, error } = await resend.emails.send({
-      from: "JustBlog <onboarding@resend.dev>",
-      to: email,
-      subject: "Welcome to JustBlog",
-      html: htmlTemplate,
-    });
+    // const templateSource = await fs.readFile(
+    //   "src/templates/email-confirmation-template.hbs"
+    // );
+    // const compiledTemplate = handlebars.compile(templateSource.toString());
+    // const htmlTemplate = compiledTemplate({
+    //   name: name,
+    //   link: confirmationLink,
+    // });
+    // const { data, error } = await resend.emails.send({
+    //   from: "JustBlog <onboarding@resend.dev>",
+    //   to: email,
+    //   subject: "Welcome to JustBlog",
+    //   html: htmlTemplate,
+    // });
 
-    if (error) {
-      res.status(400).json({ error, data });
-      return;
-    }
+    // if (error) {
+    //   res.status(400).json({ error, data });
+    //   return;
+    // }
 
     res.status(201).json({ ok: true, message: "New user added" });
   } catch (error) {
@@ -127,6 +129,7 @@ export async function confirmEmail(
     next(error);
   }
 }
+
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     const { emailOrUsername, password } = req.body;
@@ -172,7 +175,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     res
       .cookie("token", token, {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         secure: false,
       })
       .status(200)

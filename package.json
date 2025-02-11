@@ -1,27 +1,26 @@
 {
-  "dependencies": {
-    "cron": "^3.5.0",
-    "node-cron": "^3.0.3"
-  },
+  "name": "mini-project",
   "devDependencies": {
     "@types/node-cron": "^3.0.11",
     "turbo": "^2.4.0"
   },
-  "name": "excercisee",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "build": "npx turbo run build",
     "dev": "npx turbo run dev",
+    "start": "npx turbo run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "packageManager": "npm@11.0.0",
+  "description": "",
+  "packageManager": "npm@10.8.2",
   "workspaces": [
-    "/apps/*"
+    "apps/*"
   ],
-  "description": ""
+  "dependencies": {
+    "turbo": "^2.4.1"
+  }
 }
