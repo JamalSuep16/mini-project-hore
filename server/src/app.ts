@@ -7,8 +7,8 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routers/auth-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
-
-import leaderBoardRouter from "./routes/leaderboard-routers";
+import leaderBoardRouter from "./routers/leaderboard-routers";
+import userRouter from "./routers/user-router";
 
 const app = express();
 const PORT = 8000;
@@ -20,27 +20,30 @@ app.use(cookieParser());
 // Enable CORS
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost:3002"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
 // app.use("/api/v1/post", postRouter);
 // app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/leaderboard", leaderBoardRouter);
+app.use("/api/v1/leaderboards", leaderBoardRouter);
+app.use("/api/v1/users", userRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
-app.get("/api/v1/posts", async (req: Request, res: Response) => {
-  try {
-    const events = await prisma.events.findMany();
-    res.status(200).json({ ok: true, data: events });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ ok: false, error: "Internal server error" });
-  }
-});
+// app.get("/api/v1/posts", async (req: Request, res: Response) => {
+//   try {
+//     const events = await prisma.events.findMany();
+//     res.status(200).json({ ok: true, data: events });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ ok: false, error: "Internal server error" });
+//   }
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);
