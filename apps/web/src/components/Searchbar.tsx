@@ -58,14 +58,14 @@ export default function SearchBar() {
       </div>
 
       {results.length > 0 && (
-        <div className="absolute mt-2 w-full rounded-lg border bg-white p-2 shadow-lg">
+        <div className="absolute mt-2 w-96 rounded-lg border bg-white p-2 shadow-lg z-10">
           {results.map((result) => (
             <Link
               key={result.id}
-              href={`/event-posts/event-details/${result.id}`}
-              className="flex items-center gap-3 p-2 hover:bg-gray-100"
+              href={`/event-posts/${result.id}`}
+              className="grid grid-cols-2 items-center gap-3 p-2 hover:bg-gray-100"
             >
-              <div className="relative h-12 w-12 overflow-hidden rounded-md">
+              <div className="relative h-12 w-full overflow-hidden rounded-md">
                 <Image
                   src={result.image}
                   fill

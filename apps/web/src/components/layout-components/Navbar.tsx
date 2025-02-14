@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import Logout from "../logout";
+// import Logout from "../logout";
 import SearchBar from "../Searchbar";
 
 export default function Navbar() {
@@ -44,7 +44,7 @@ export default function Navbar() {
           <li className="mx-3 rounded-full border-2 border-darkPurple px-3 py-1">
             <Link href={"/"} className="text-darkPurple font-delius">Log In</Link>
           </li>
-            <Logout />
+            {/* <Logout /> */}
 
         </ul>
       </nav>

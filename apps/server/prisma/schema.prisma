@@ -79,12 +79,12 @@ model Event {
   id         Int        @id @default(autoincrement())
   title      String
   desc       String
-  slug      String
-  location String
+  slug       String     
+  location   String
   categories Categories
   image      String
   upcoming   Boolean    @default(false)
-  price      Int        
+  price      Int
   date       DateTime
 
   Order    Order[]
@@ -104,6 +104,7 @@ model Categoriess {
 model Feedback {
   id Int @id @default(autoincrement())
 
+  title       String
   comments    String
   ratings     Int
   suggestions String
@@ -120,7 +121,7 @@ model Badge {
   name        String
   description String
 
-  users       User[]
+  users User[]
 }
 
 model Wallet {

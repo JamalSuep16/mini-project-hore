@@ -96,7 +96,7 @@ async function main() {
       location: "Bali",
       categories: "Food",
       image:
-        "https://images.unsplash.com/photo-1555685812-4b7432b8b8a5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1527786747587-f712769de1e2?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       upcoming: true,
       price: 500,
       date: new Date("2024-09-20T08:00:00Z"),
@@ -372,6 +372,7 @@ async function main() {
 
   const coolFeedback = await prisma.feedback.create({
     data: {
+      title: "Cool",
       comments: "WAAAWW, gila keren banget coi",
       ratings: 5,
       suggestions: "gak ada sih cuma semoga lebih gacor lagi ygy",
@@ -382,6 +383,7 @@ async function main() {
 
   const amazingFeedback = await prisma.feedback.create({
     data: {
+      title: "Amazing",
       comments: "Wow, this is absolutely amazing!",
       ratings: 5,
       suggestions: "Nothing much, just keep up the great work!",
@@ -392,6 +394,7 @@ async function main() {
 
   const impressiveFeedback = await prisma.feedback.create({
     data: {
+      title: "impressive",
       comments: "Really impressive! I love the effort put into this.",
       ratings: 4,
       suggestions: "Maybe some minor improvements in responsiveness.",
@@ -402,6 +405,7 @@ async function main() {
 
   const disappointingFeedback = await prisma.feedback.create({
     data: {
+      title: "disappointing",
       comments: "This was honestly disappointing. I expected more.",
       ratings: 2,
       suggestions: "The UI feels outdated, and the performance is sluggish.",
@@ -412,6 +416,7 @@ async function main() {
 
   const terribleFeedback = await prisma.feedback.create({
     data: {
+      title: "terrible",
       comments: "Terrible experience. So many bugs and crashes frequently.",
       ratings: 1,
       suggestions:
@@ -423,6 +428,7 @@ async function main() {
 
   const decentFeedback = await prisma.feedback.create({
     data: {
+      title: "decent",
       comments: "Not bad at all! I enjoyed using this.",
       ratings: 4,
       suggestions: "Maybe add a dark mode option for better usability.",
