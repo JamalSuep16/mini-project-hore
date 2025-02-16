@@ -8,6 +8,7 @@ import authRouter from "./routers/auth-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
 import events from "./routers/event-routers"
+import feedbackRouter from "./routers/feedback-router"
 
 import leaderBoardRouter from "./routers/leaderboard-routers";
 
@@ -32,6 +33,7 @@ app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/events", events)
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/leaderboard", leaderBoardRouter);
+app.use("/api/v1/feedback", feedbackRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

@@ -1,33 +1,49 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import {  useState } from "react";
 import { Star } from "lucide-react";
 import Image from "next/image";
+// import { useRouter } from "next/navigation";
+import axios from "axios";
 
-export default function Feedback() {
+export default function Feedback({ params }) {
   const [feedbackForm, setFeedbackForm] = useState({
     title: "",
     comment: "",
     rating: 0,
+    suggestion: "",
   });
   const [hoveredRating, setHoveredRating] = useState(0);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    console.log("Feedback submitted:", feedbackForm);
+  // const router = useRouter();
+
+  axios.post("http://localhost:8000/api/v1/feedback", feedbackForm);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      setSubmitted(true);
+      // router.push("/");
+
+      const formData = new FormData()
+      formData.append("title", feedbackForm.title)
+      formData.append("rating", feedbackForm.rating.toString())
+      formData.append("comment", feedbackForm.comment)
+
+      console.log("Feedback submitted:", feedbackForm);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleRatingClick = (rating: number) => {
-    setFeedbackForm(prev => ({ ...prev, rating }));
+    setFeedbackForm((prev) => ({ ...prev, rating }));
   };
 
   const handleRatingHover = (rating: number) => {
     setHoveredRating(rating);
   };
-
-  
 
   if (submitted) {
     return (
@@ -36,7 +52,9 @@ export default function Feedback() {
           <div className="text-center">
             <div className="mb-4 text-6xl">🎉</div>
             <h2 className="mb-2 text-2xl font-bold">Thank You!</h2>
-            <p className="text-gray-600">Your feedback has been submitted successfully.</p>
+            <p className="text-gray-600">
+              Your feedback has been submitted successfully.
+            </p>
           </div>
         </div>
       </div>
@@ -72,6 +90,7 @@ export default function Feedback() {
                     onMouseEnter={() => handleRatingHover(star)}
                     onMouseLeave={() => handleRatingHover(0)}
                     onClick={() => handleRatingClick(star)}
+                    value={feedbackForm.rating}
                     className="transition-transform hover:scale-110"
                   >
                     <Star
@@ -91,8 +110,8 @@ export default function Feedback() {
           {/* Form Section */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label 
-                htmlFor="title" 
+              <label
+                htmlFor="title"
                 className="mb-2 block text-sm font-medium text-gray-700"
               >
                 Title
@@ -101,8 +120,11 @@ export default function Feedback() {
                 type="text"
                 id="title"
                 value={feedbackForm.title}
-                onChange={(e) => 
-                  setFeedbackForm(prev => ({ ...prev, title: e.target.value }))
+                onChange={(e) =>
+                  setFeedbackForm((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
                 }
                 required
                 className="w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -111,8 +133,8 @@ export default function Feedback() {
             </div>
 
             <div>
-              <label 
-                htmlFor="comment" 
+              <label
+                htmlFor="comment"
                 className="mb-2 block text-sm font-medium text-gray-700"
               >
                 Comment
@@ -120,8 +142,34 @@ export default function Feedback() {
               <textarea
                 id="comment"
                 value={feedbackForm.comment}
-                onChange={(e) => 
-                  setFeedbackForm(prev => ({ ...prev, comment: e.target.value }))
+                onChange={(e) =>
+                  setFeedbackForm((prev) => ({
+                    ...prev,
+                    comment: e.target.value,
+                  }))
+                }
+                required
+                rows={6}
+                className="w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Share your thoughts and experience..."
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="suggestion"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Suggestion
+              </label>
+              <textarea
+                id="suggestion"
+                value={feedbackForm.suggestion}
+                onChange={(e) =>
+                  setFeedbackForm((prev) => ({
+                    ...prev,
+                    suggestion: e.target.value,
+                  }))
                 }
                 required
                 rows={6}

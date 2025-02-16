@@ -79,7 +79,7 @@ model Event {
   id         Int        @id @default(autoincrement())
   title      String
   desc       String
-  slug       String     
+  slug       String
   location   String
   categories Categories
   image      String
@@ -108,9 +108,8 @@ model Feedback {
   comments    String
   ratings     Int
   suggestions String
-
-  userId  Int
-  eventId Int
+  userId      Int
+  eventId     Int
 
   User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   Event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)

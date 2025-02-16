@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getCategoryEvents,
   getLocationEvents,
   searchEvents,
   getAllEvents,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.route("/").get(getAllEvents).post(upload.single("image"), postEvent);
 router.route("/locations").get(getLocationEvents);
+router.route("/categories").get(getCategoryEvents);
 router.route("/paginated").get(getPaginatedEvents);
 router.route("/upcoming").get(getUpcomingEvents);
 router.route("/search").get(searchEvents);

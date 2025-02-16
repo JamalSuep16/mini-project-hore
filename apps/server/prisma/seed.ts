@@ -18,7 +18,7 @@ async function main() {
       title: "Journey to the Unknown",
       desc: "Exploring the mysteries of the universe.",
       slug: "journey-to-the-unknown",
-      location: "New York",
+      location: "Jakarta",
       categories: "Music",
       image:
         "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -33,7 +33,7 @@ async function main() {
       title: "The Art of Mindfulness",
       desc: "A guide to living in the present moment.",
       slug: "the-art-of-mindfulness",
-      location: "Los Angeles",
+      location: "Bali",
       categories: "Arts",
       image:
         "https://plus.unsplash.com/premium_photo-1661767490975-f31a02946f48?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -48,7 +48,7 @@ async function main() {
       title: "Tech Innovations 2023",
       desc: "Discover the latest advancements in technology.",
       slug: "tech-innovations-2023",
-      location: "San Francisco",
+      location: "Jogjakarta",
       categories: "Bussiness",
       image:
         "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -63,7 +63,7 @@ async function main() {
       title: "Culinary Delights",
       desc: "A journey through the world of gourmet cuisine.",
       slug: "culinary-delights",
-      location: "Paris",
+      location: "Batam",
       categories: "Food",
       image:
         "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -78,7 +78,7 @@ async function main() {
       title: "Global Eco-Friendly Company Forum",
       desc: "To make the world a better place.",
       slug: "global-eco-friendly-company-forum",
-      location: "Berlin",
+      location: "Jakarta",
       categories: "Bussiness",
       image:
         "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -108,7 +108,7 @@ async function main() {
       title: "Photography Workshop",
       desc: "Learn the art of photography from professionals.",
       slug: "photography-workshop",
-      location: "Tokyo",
+      location: "Jogjakarta",
       categories: "Arts",
       image:
         "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -123,7 +123,7 @@ async function main() {
       title: "Startup Pitch Night",
       desc: "Pitch your startup idea to potential investors.",
       slug: "startup-pitch-night",
-      location: "Silicon Valley",
+      location: "Batam",
       categories: "Bussiness",
       image:
         "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -138,7 +138,7 @@ async function main() {
       title: "Cooking Masterclass",
       desc: "Master the art of cooking with top chefs.",
       slug: "cooking-masterclass",
-      location: "Rome",
+      location: "Jakarta",
       categories: "Food",
       image:
         "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -357,12 +357,12 @@ async function main() {
         "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   });
-  const Hobbies = await prisma.categoriess.create({
+  const Music = await prisma.categoriess.create({
     data: {
-      name: "Food",
+      name: "Music",
       preview: "Lorem ipsum",
       imageURL:
-        "https://images.unsplash.com/photo-1736613403120-8d48aebd29e1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   });
 

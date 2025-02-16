@@ -1,6 +1,6 @@
 import express from "express";
 import {
-//   createCategory,
+  getSingleCategories,
   getAllCategories,
 } from "../controllers/categories-controller";
 // import { roleGuard, verifyToken } from "../middlewares/auth-middleware"
@@ -12,7 +12,9 @@ const router = express.Router();
 //   .get(verifyToken, roleGuard("ADMIN"), getAllCategory)
 //   .post(verifyToken, roleGuard("AUTHOR"), createCategory);
 
-router.route("/").get(getAllCategories)
+router.route("/").get(getAllCategories);
+router.route("/:id").get(getSingleCategories);
+
 // post(createCategory);
 
 export default router;

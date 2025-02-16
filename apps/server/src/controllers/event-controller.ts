@@ -74,6 +74,29 @@ export async function getLocationEvents(req: Request, res: Response) {
   }
 }
 
+export async function getCategoryEvents(req: Request, res: Response) {
+  try {
+    // Fetch events ordered by category
+    const events = await prisma.event.findMany({
+      orderBy: { categories: "asc" },
+    });
+
+    // Group events by category
+    const groupedEvents: Record<string, typeof events> = {};
+
+    for (const event of events) {
+      groupedEvents[event.categories] ??= [];
+      groupedEvents[event.categories].push(event);
+    }
+
+    res.json({ status: "success", data: groupedEvents });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+
 export async function getPaginatedEvents(req: Request, res: Response) {
   try {
     const page = parseInt(req.query.page as string) || 1;

@@ -13,6 +13,8 @@ interface Event {
   image: string;
   upcoming: boolean;
   date: string;
+  location:string
+  price: number
 }
 
 interface EventsResponse {
@@ -42,7 +44,6 @@ export default function EventPostsPage() {
 
         // Update events from response data
         setEvents(response.data.data);
-
         // Update total pages from meta data if available, otherwise keep default 3
         setTotalPages(response.data.meta?.totalPages || 3);
       } catch (error) {
@@ -112,10 +113,10 @@ export default function EventPostsPage() {
               </div>
               <p>{event.date}</p>
               <p>{event.desc}</p>
-              <p>in Jakarta</p>
-              <p>Rp.3.000.000</p>
+              <p>{event.location}</p>
+              <p>{`Rp. ${event.price} 000`}</p>
               <p>by a Muskateer!</p>
-              <Link href={"/event-posts/event-details"}>Read More</Link>
+              <Link href={`/event-posts/${String(event.id)}`}>Read More</Link>
             </div>
           </div>
         ))}

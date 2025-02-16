@@ -12,3 +12,16 @@ export async function getAllCategories(req: Request, res: Response) {
     res.status(500).json({ error: "problem in internal server" });
   }
 }
+
+export async function getSingleCategories(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const cates = await prisma.categoriess.findUnique({
+      where: { id: Number(id) },
+    });
+    res.status(200).json({ get: "success", data: cates });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "problem in internal server" });
+  }
+}

@@ -15,7 +15,11 @@ interface Event {
   date: string;
 }
 
-export default function EventDetails({ params }) {
+interface Params {
+  eventid: string;
+}
+
+export default function EventDetails({ params }: { params: Params }) {
   const rating = [1, 2, 3, 4, 5];
 
   // ✅ Fix 1: Initialize state properly
@@ -28,8 +32,7 @@ export default function EventDetails({ params }) {
         const res = await axios.get(
           `http://localhost:8000/api/v1/events/${id}`,
         );
-        // const res = await fetch(`http://localhost:8000/api/v1/events/${singleEvent?.id}`);
-        // const details = await res.json()
+
         // ✅ Fix 2: Extract `res.data.data`, not the entire response
         setSingleEvent(res.data.data);
       } catch (error) {
@@ -42,7 +45,7 @@ export default function EventDetails({ params }) {
 
   if (!singleEvent) return <p className="p-10 px-40">NULL</p>;
 
-  console.log(params);
+  console.log(singleEvent)
 
   return (
     <>
