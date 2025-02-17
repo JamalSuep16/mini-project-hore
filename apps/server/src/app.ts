@@ -8,10 +8,8 @@ import authRouter from "./routers/auth-router";
 import ticketsRouter from "./routers/tickets-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
-import referralRouter from "./routers/referral-router";
-import statsRouter from "./routers/stats-router";
-import categoryRouter from "./routers/category-router"
-
+import dashboardRouter from "./routers/dashboard-router";
+// import categoryRouter from "./routers/category-router"
 
 import leaderBoardRouter from "./routers/leaderboard-routers";
 import userRouter from "./routers/user-router";
@@ -37,9 +35,8 @@ app.use(
 // app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/tickets", ticketsRouter);
-app.use("/api/v1/referral", referralRouter);
-app.use("api/v1/stats", statsRouter);
-app.use("/api/v1/categories", categoryRouter);
+app.use("api/v1/dashboardOrganizer", dashboardRouter);
+// app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/events", events);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/leaderboards", leaderBoardRouter);
