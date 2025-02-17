@@ -1,28 +1,28 @@
 import multer from "multer";
-import path from "path";
+import path from "node:path";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Ensure this folder exists
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({
-  storage,
+export const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "public/images");
+    },
+    filename(req, file, cb) {
+      const uniquePrefix = `img-${Date.now()}`;
+      cb(null, uniquePrefix + path.extname(file.originalname));
+    },
+  }),
   fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png/;
-    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-    const mimeType = fileTypes.test(file.mimetype);
+    const allowedtypes = /jpeg|jpg|png|webp|avif/;
+    const extname = allowedtypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+    const mimetype = allowedtypes.test(file.mimetype);
 
-    if (mimeType && extname) {
+    if (extname && mimetype) {
       return cb(null, true);
     } else {
-      cb(new Error("Images only!"));
+      return cb(new Error("Images only"));
     }
   },
+  limits: { fileSize: 5000000 },
 });
-
-export default upload;

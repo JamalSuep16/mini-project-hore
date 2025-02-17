@@ -85,5 +85,6 @@ export default async function UpcomingEvents() {
         </div>
       </div>
     </section>
+
   );
 }

@@ -2,18 +2,18 @@ import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import fs from "node:fs/promises";
 
-export async function logger(errorMessage: string) {
-  try {
-    const timestamp = new Date().toISOString();
-    const logMessage = `${timestamp} - ${errorMessage}\n`;
+// export async function logger(errorMessage: string) {
+//   try {
+//     const timestamp = new Date().toISOString();
+//     const logMessage = `${timestamp} - ${errorMessage}\n`;
 
-    await fs.appendFile("logs/error.log", logMessage, "utf-8");
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(`Error writing the log: ${error.message}`);
-    }
-  }
-}
+//     await fs.appendFile("logs/error.log", logMessage, "utf-8");
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       console.error(`Error writing the log: ${error.message}`);
+//     }
+//   }
+// }
 
 export default function errorMiddleware(
   error: Error,
@@ -23,7 +23,7 @@ export default function errorMiddleware(
 ) {
   console.error(error);
 
-  logger(error.message);
+  // logger(error.message);
 
   if (error instanceof z.ZodError) {
     res.status(400).json({ message: error.errors });
