@@ -122,6 +122,42 @@ model Ticket {
   eventId Int
 }
 
+model Event {
+  id         Int        @id @default(autoincrement())
+  title      String
+  desc       String
+  slug       String
+  location   String
+  categories Categories
+  image      String
+  upcoming   Boolean    @default(false)
+  price      Int
+  date       DateTime
+
+  Order    Order[]
+  Feedback Feedback[]
+  tickets  Ticket[]
+  User     User?      @relation(fields: [userId], references: [id])
+  userId   Int?
+  Voucher  Voucher[]
+}
+
+model Categoriess {
+  id       Int        @id @default(autoincrement())
+  name     Categories
+  preview  String
+  imageURL String
+}
+
+model Feedback {
+  id Int @id @default(autoincrement())
+
+  title       String
+  comments    String
+  ratings     Int
+  suggestions String
+  userId      Int
+  eventId     Int
 model Registration {
   id            Int                @id @default(autoincrement())
   user          User               @relation(fields: [userId], references: [id])
@@ -185,6 +221,8 @@ model Points {
   User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+  users User[]
+
 model Coupon {
   id             Int      @id @default(autoincrement())
   code           String   @unique
@@ -214,3 +252,15 @@ model Wallet {
 
   User User @relation(fields: [userId], references: [id])
 }
+
+model Voucher {
+  id           Int      @id @default(autoincrement())
+  code         String   @unique
+  discountRate Int
+  stock        Int      @default(10)
+  eventId      Int
+  expiredDate  DateTime
+
+  Event Event @relation(fields: [eventId], references: [id])
+}
+

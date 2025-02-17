@@ -13,6 +13,8 @@ interface Event {
   image: string;
   upcoming: boolean;
   date: string;
+  location: string;
+  price: number;
 }
 
 interface EventsResponse {
@@ -42,7 +44,6 @@ export default function EventPostsPage() {
 
         // Update events from response data
         setEvents(response.data.data);
-
         // Update total pages from meta data if available, otherwise keep default 3
         setTotalPages(response.data.meta?.totalPages || 3);
       } catch (error) {
@@ -92,33 +93,38 @@ export default function EventPostsPage() {
       </div>
 
       <div className="grid grid-cols-2 p-20">
-        {events.map((event) => (
-          <div
-            key={event.id}
-            className="bg-lightAnas text-darkAnas flex w-96 flex-col gap-3 justify-self-center rounded-lg border-4 border-lightPurple p-5 shadow-2xl"
-          >
-            <div className="relative h-44 w-full overflow-hidden rounded-md">
-              <Image
-                src={event.image}
-                fill
-                alt={event.title}
-                className="object-cover"
-              />
-            </div>
-            <div className="flex w-full flex-col gap-2">
-              <div className="bg-lightSena flex flex-col gap-3 rounded-sm p-2 font-bold">
-                <h1 className="text-2xl">{event.title}</h1>
-                <p>{event.categories}</p>
+        {events.map((event) => {
+          const formattedDate = new Date(event.date).toLocaleDateString(
+            "en-GB",
+          );
+          return (
+            <div
+              key={event.id}
+              className="bg-lightAnas text-darkAnas flex w-96 flex-col gap-3 justify-self-center rounded-lg border-4 border-lightPurple p-5 shadow-2xl"
+            >
+              <div className="relative h-44 w-full overflow-hidden rounded-md">
+                <Image
+                  src={event.image}
+                  fill
+                  alt={event.title}
+                  className="object-cover"
+                />
               </div>
-              <p>{event.date}</p>
-              <p>{event.desc}</p>
-              <p>in Jakarta</p>
-              <p>Rp.3.000.000</p>
-              <p>by a Muskateer!</p>
-              <Link href={"/event-posts/event-details"}>Read More</Link>
+              <div className="flex w-full flex-col gap-2">
+                <div className="bg-lightSena flex flex-col gap-3 rounded-sm p-2 font-bold">
+                  <h1 className="text-2xl">{event.title}</h1>
+                  <p>{event.categories}</p>
+                </div>
+                <p>{formattedDate}</p>
+                <p>{event.desc}</p>
+                <p>{event.location}</p>
+                <p>{`Rp. ${event.price} 000`}</p>
+                <p>by a Muskateer!</p>
+                <Link href={`/event-posts/${String(event.id)}`}>Read More</Link>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-4 pb-8">

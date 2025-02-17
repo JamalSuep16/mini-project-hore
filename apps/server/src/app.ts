@@ -8,6 +8,8 @@ import authRouter from "./routers/auth-router";
 import ticketsRouter from "./routers/tickets-router";
 import notFoundMiddleware from "./middlewares/not-found-middleware";
 import errorMiddleware from "./middlewares/error-middleware";
+import events from "./routers/event-routers"
+import feedbackRouter from "./routers/feedback-router"
 import dashboardRouter from "./routers/dashboard-router";
 // import categoryRouter from "./routers/category-router"
 
@@ -26,6 +28,9 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",
+    methods: ['GET', 'POST'],
+    credentials: true
+
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
@@ -34,6 +39,8 @@ app.use(
 // app.use("/api/v1/post", postRouter);
 // app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/leaderboard", leaderBoardRouter);
+app.use("/api/v1/feedback", feedbackRouter);
 app.use("/api/v1/tickets", ticketsRouter);
 app.use("api/v1/dashboardOrganizer", dashboardRouter);
 // app.use("/api/v1/categories", categoryRouter);

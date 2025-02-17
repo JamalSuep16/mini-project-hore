@@ -1,20 +1,22 @@
 import express from "express";
 import {
-  // createEvent,
+  getCategoryEvents,
+  getLocationEvents,
   searchEvents,
   getAllEvents,
   getPaginatedEvents,
   getSingleEvent,
-  getUpcomingEvents
+  getUpcomingEvents,
+  postEvent
 } from "../controllers/event-controller";
-// import upload from "../middlewares/upload-middleware";
-
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+import upload from "../middlewares/upload-middleware";
+// import { roleGuard, verifyToken } from "../middlewares/auth-middleware";
 
 const router = express.Router();
 
-router.route("/").get(getAllEvents);
+router.route("/").get(getAllEvents).post(upload.single("image"), postEvent);
+router.route("/locations").get(getLocationEvents);
+router.route("/categories").get(getCategoryEvents);
 router.route("/paginated").get(getPaginatedEvents);
 router.route("/upcoming").get(getUpcomingEvents);
 router.route("/search").get(searchEvents);

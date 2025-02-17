@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import axios from "axios";
 import Image from "next/image";
@@ -15,18 +15,24 @@ interface Event {
   date: string;
 }
 
-export default function EventDetails() {
+interface Params {
+  eventid: string;
+}
+
+export default function EventDetails({ params }: { params: Params }) {
   const rating = [1, 2, 3, 4, 5];
 
   // ✅ Fix 1: Initialize state properly
   const [singleEvent, setSingleEvent] = useState<Event | null>(null);
-  
 
   useEffect(() => {
     async function fetchSingleEvent() {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/events/10`);
-        
+        const id = (await params).eventid;
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/events/${id}`,
+        );
+
         // ✅ Fix 2: Extract `res.data.data`, not the entire response
         setSingleEvent(res.data.data);
       } catch (error) {
@@ -37,7 +43,7 @@ export default function EventDetails() {
     fetchSingleEvent();
   }, []); // ✅ Fix 3: Add empty dependency array
 
-  if (!singleEvent) return <p>Loading...</p>;
+  if (!singleEvent) return <p className="p-10 px-40">NULL</p>;
 
   console.log(singleEvent)
 
@@ -64,14 +70,14 @@ export default function EventDetails() {
           <h3>Category: {singleEvent.categories}</h3>
 
           {/* Price */}
-          <h3>Rp.{singleEvent.price.toLocaleString()}</h3>
+          <h3>Rp.{singleEvent.price}</h3>
 
           {/* Date */}
           <h3>Date: {new Date(singleEvent.date).toLocaleDateString()}</h3>
         </div>
 
         {/* description */}
-        <div className="">
+        <div className="flex flex-col gap-10 justify-center">
           <span>Event description</span>
           <p>{singleEvent.desc}</p>
 
