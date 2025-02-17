@@ -92,6 +92,7 @@ model Event {
   tickets  Ticket[]
   User     User?      @relation(fields: [userId], references: [id])
   userId   Int?
+  Voucher  Voucher[]
 }
 
 model Categoriess {
@@ -141,5 +142,15 @@ model Transaction {
   wallet Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
 }
 
-// model Leaderboard {
-// }
+model Voucher {
+  id           Int      @id @default(autoincrement())
+  code         String   @unique
+  discountRate Int
+  stock        Int      @default(10)
+  eventId      Int
+  expiredDate  DateTime
+
+  Event Event @relation(fields: [eventId], references: [id])
+}
+
+

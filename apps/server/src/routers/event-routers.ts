@@ -10,6 +10,7 @@ import {
   postEvent
 } from "../controllers/event-controller";
 import upload from "../middlewares/upload-middleware";
+// import { roleGuard, verifyToken } from "../middlewares/auth-middleware";
 
 const router = express.Router();
 

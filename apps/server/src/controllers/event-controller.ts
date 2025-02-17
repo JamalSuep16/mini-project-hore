@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import cloudinary from "../configs/cloudinary";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs/promises";
-import { promises } from "node:fs";
 
 const prisma = new PrismaClient();
 
