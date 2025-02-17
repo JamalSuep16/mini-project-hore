@@ -17,7 +17,7 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -50,13 +50,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-96">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
+      <div className="w-96 rounded-2xl bg-white p-8 shadow-2xl">
+        <h2 className="mb-6 text-center text-3xl font-bold text-gray-800">
           Register
         </h2>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {error && <p className="mb-4 text-center text-red-500">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -65,7 +65,7 @@ export default function RegisterPage() {
             placeholder="Full Name"
             value={form.name}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             name="username"
@@ -73,7 +73,7 @@ export default function RegisterPage() {
             placeholder="Username"
             value={form.username}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             name="email"
@@ -81,7 +81,7 @@ export default function RegisterPage() {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             name="password"
@@ -89,13 +89,13 @@ export default function RegisterPage() {
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <select
             name="role"
             value={form.role}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Role</option>
             <option value="USER">User</option>
@@ -109,12 +109,12 @@ export default function RegisterPage() {
             placeholder="Referral Code (Optional)"
             value={form.referralCode}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <button
             type="submit"
-            className="w-full p-3 text-white bg-blue-600 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 disabled:bg-gray-400"
+            className="w-full rounded-lg bg-blue-600 p-3 font-semibold text-white transition duration-300 hover:bg-blue-700 disabled:bg-gray-400"
             disabled={loading}
           >
             {loading ? "Registering..." : "Register"}

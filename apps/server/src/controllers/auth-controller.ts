@@ -1,14 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient, Role } from "@prisma/client";
-import bcryptjs from "bcryptjs";
+import { PrismaClient } from "@prisma/client";
+import bcrypt, { genSalt, hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Resend } from "resend";
 import crypto from "node:crypto";
-import { v4 as uuidv4 } from "uuid";
 import fs from "node:fs/promises";
 import handlebars from "handlebars";
-
-import { registerSchema } from "../schemas/auth-schemas";
 
 const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -19,113 +16,73 @@ export async function register(
   next: NextFunction
 ) {
   try {
-    const { name, username, email, password, role } = registerSchema.parse(
-      req.body
-    );
+    console.log("Hit");
+    const { name, email, password, referralCode, role, username } = req.body;
 
-    if (!name || !username || !email || !password || !role) {
-      res.status(400).json({ message: "Missing required fields" });
-      return;
-    }
-
-    const existingUser = await prisma.user.findUnique({
-      where: { email: email, username: username },
+    const existingrefferal = await prisma.user.findUnique({
+      where: { referral: referralCode },
     });
 
-    if (existingUser) {
-      res.status(400).json({ message: "Email or username has already taken" });
+    const date = new Date();
+    const generatedReferralCode =
+      name.slice(0, 3) + "REF" + date.getMilliseconds();
+
+    if (referralCode && referralCode !== existingrefferal?.referral) {
+      res.status(400).json({ message: "Invalid referral code!!!" });
       return;
     }
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
+    const salt = await genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
-        username,
         email,
+        username, // or any other logic to generate username
         password: hashedPassword,
-        role: role as Role,
-        referralCode: uuidv4().slice(0, 8),
+        referral: generatedReferralCode,
+        role: role,
       },
     });
 
-    const confirmToken = crypto.randomBytes(20).toString("hex");
-    const confirmationLink = `http://localhost:8000/api/v1/auth/confirm-email?token=${confirmToken}`;
+    if (referralCode) {
+      const referralOwner = await prisma.user.findFirst({
+        where: { referral: referralCode },
+      });
 
-    await prisma.confirmToken.create({
+      await prisma.coupon.create({
+        data: {
+          discount: 10000,
+          code: `${Math.random()}`,
+          userId: user?.id ?? 0,
+          expirationDate: new Date(date.setMonth(date.getMonth() + 3)),
+        },
+      });
+
+      if (referralOwner && role === "USER") {
+        await prisma.points.create({
+          data: {
+            balance: 10000,
+            userId: referralOwner?.id,
+            expirationDate: new Date(date.setMonth(date.getMonth() + 3)),
+          },
+        });
+      }
+    }
+
+    await prisma.wallet.create({
       data: {
-        expiredDate: new Date(Date.now() + 1000 * 60 * 5),
-        token: confirmToken,
-        userId: newUser.id,
+        userId: user.id,
+        credit: 0,
       },
     });
 
-    // const templateSource = await fs.readFile(
-    //   "src/templates/email-confirmation-template.hbs"
-    // );
-    // const compiledTemplate = handlebars.compile(templateSource.toString());
-    // const htmlTemplate = compiledTemplate({
-    //   name: name,
-    //   link: confirmationLink,
-    // });
-    // const { data, error } = await resend.emails.send({
-    //   from: "JustBlog <onboarding@resend.dev>",
-    //   to: email,
-    //   subject: "Welcome to JustBlog",
-    //   html: htmlTemplate,
-    // });
+    // where to put the code for expiration date
 
-    // if (error) {
-    //   res.status(400).json({ error, data });
-    //   return;
-    // }
-
-    res.status(201).json({ ok: true, message: "New user added" });
+    res.status(201).json({ ok: true, message: "User created successfully" });
   } catch (error) {
-    next(error);
-  }
-}
-
-export async function confirmEmail(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const token = req.query.token;
-
-    if (!token) {
-      res.status(400).json({ message: "Token is required" });
-      return;
-    }
-
-    const tokenRecord = await prisma.confirmToken.findFirst({
-      where: { token: token as string },
-    });
-
-    if (
-      !tokenRecord ||
-      tokenRecord.used ||
-      tokenRecord.expiredDate < new Date()
-    ) {
-      res.status(400).json({ message: "Invalid or expired token!" });
-      return;
-    }
-
-    await prisma.confirmToken.update({
-      where: { id: tokenRecord.id },
-      data: { used: true },
-    });
-
-    await prisma.user.update({
-      where: { id: tokenRecord.userId },
-      data: { emailConfirmed: true },
-    });
-
-    res.status(200).send(`<p>Email confirmed! Please go to the login page</p>`);
-  } catch (error) {
+    console.error(error);
     next(error);
   }
 }
@@ -154,7 +111,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       return;
     }
 
-    const isValidPassword = await bcryptjs.compare(
+    const isValidPassword = await bcrypt.compare(
       password,
       existingUser.password
     );
